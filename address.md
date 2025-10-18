@@ -1,0 +1,8 @@
+usdc(ata):FbK1BUmHbH3aGeepmg8tUksmfyNTmjqj79cyJBPXWXrL
+
+program id:GSPmsxkxd5qR5HG4fhUd5cBrVkWNJWi6pWUFQnYmTEc1
+
+admin(现在是wallet):6H7AYKpUHnMuca92gc82oArXC48igkLi14mcZh9XNLpp
+
+允许调用此程序的程序：6H7AYKpUHnMuca92gc82oArXC48igkLi14mcZh9XNLpp（以后是layerzero）
+
