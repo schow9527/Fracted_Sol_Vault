@@ -9,10 +9,11 @@
   - `vault_authority` = PDA(["vault", config])（金库签名人）
 - 金库 ATA：mint 对应的 ATA，owner=`vault_authority`
 
-### 允许你的程序调用（allowed_caller_authority）
-在初始化时设置：
-- `initialize(allowed_caller_authority, allowed_mints: Vec<Pubkey>)`
-  - `allowed_caller_authority` 建议使用你程序能签名的 PDA 地址（固定 seeds）
+
+#### 允许你的程序调用（allowed_caller_authority）
+在初始化脚本initVault.ts时：
+    ----allowed-caller <使用你程序能签名的 PDA 地址（固定 seeds）>
+
 
 如果已经初始化完毕，需要更换允许的调用方，可选择：
 - 重新部署并用新的 `allowed_caller_authority` 初始化；
