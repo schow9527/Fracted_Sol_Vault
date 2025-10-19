@@ -115,7 +115,7 @@ async function main() {
   }
 
   const sig = await program.methods
-    .depositFromUser(new anchor.BN(amount.toString()))
+    .depositFromUser(new anchor.BN(amount.toString()), Buffer.from([]))
     .accounts({
       config: configPda,
       user: userPubkey,
@@ -124,6 +124,7 @@ async function main() {
       vaultTokenAccount: vaultAta,
       mint,
       tokenProgram,
+      postProgram: undefined,
     })
     .rpc();
 

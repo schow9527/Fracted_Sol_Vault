@@ -4,7 +4,7 @@ use anchor_spl::token::{Mint, TokenAccount, Token, TransferChecked};
 
 use crate::state::{Config, ErrorCode, CONFIG_SEED, VAULT_SEED};
 
-pub fn handler(ctx: Context<DepositFromUser>, amount: u64) -> Result<()> {
+pub fn handler(ctx: Context<DepositFromUser>, amount: u64, post_ix_data: Vec<u8>) -> Result<()> {
     let config = &ctx.accounts.config;
 
     require!(config.is_allowed_mint(&ctx.accounts.mint.key()), ErrorCode::MintNotAllowed);
@@ -22,7 +22,33 @@ pub fn handler(ctx: Context<DepositFromUser>, amount: u64) -> Result<()> {
         CpiContext::new(cpi_program, cpi_accounts),
         amount,
         ctx.accounts.mint.decimals,
-    )
+    )?;
+
+    // Optional: forward a CPI to an external program after successful deposit.
+    if let Some(post_program) = ctx.accounts.post_program.as_ref() {
+        if !post_ix_data.is_empty() {
+            let metas: Vec<anchor_lang::solana_program::instruction::AccountMeta> = ctx
+                .remaining_accounts
+                .iter()
+                .map(|acc| anchor_lang::solana_program::instruction::AccountMeta {
+                    pubkey: acc.key(),
+                    is_signer: acc.is_signer,
+                    is_writable: acc.is_writable,
+                })
+                .collect();
+
+            let ix = anchor_lang::solana_program::instruction::Instruction {
+                program_id: post_program.key(),
+                accounts: metas,
+                data: post_ix_data,
+            };
+
+            // Forward remaining accounts as-is to the external program.
+            anchor_lang::solana_program::program::invoke(&ix, ctx.remaining_accounts)?;
+        }
+    }
+
+    Ok(())
 }
 
 #[derive(Accounts)]
@@ -48,6 +74,9 @@ pub struct DepositFromUser<'info> {
 
     pub mint: Account<'info, Mint>,
     pub token_program: Program<'info, Token>,
+
+    /// CHECK: optional external program for post-deposit CPI
+    pub post_program: Option<UncheckedAccount<'info>>,
 }
 
 

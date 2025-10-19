@@ -6,3 +6,15 @@ admin(现在是wallet):6H7AYKpUHnMuca92gc82oArXC48igkLi14mcZh9XNLpp
 
 允许调用此程序的程序：6H7AYKpUHnMuca92gc82oArXC48igkLi14mcZh9XNLpp（以后是layerzero）
 
+
+LZ合约的
+Store PDA: 4he5RdGseyKJBgEGQmjMFQ3MKKFs3EQYQEEtbVvwZnnL
+Bump: 255
+或者 用这个（CV）
+Store PDA: 2shV4AoGNput9NqaKrcyHXHhwzsksXgJ4LC25FtbJsSy
+Bump: 254
+
+
+本合约的PDA (给前端看的)
+ config PDA:X6ci3v3wgpFrRvmsFsjeemr1EDeaHaok23UsehuQcvn
+ vault_authority:A9QYh2sTEN3XFFk95WZr2hsLFMC2781oPwKexPySNJrt

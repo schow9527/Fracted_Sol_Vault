@@ -42,6 +42,17 @@ npx ts-node scripts/initVault.ts \
 
 
 
+
+设置可以远程调用 transferOut  命令的合约PDA
+npx ts-node scripts/setAllowedCaller.ts \
+  --program <PROGRAM_ID> \
+  --new-allowed <对方程序PDA公钥> \
+  --rpc https://api.devnet.solana.com
+
+
+
+
+
 2) 用户仅存金 deposit_from_user（不记录 LP）
 说明：用户先要有该 mint 的余额。本地可自建测试 mint 并 mint 给用户；devnet 可用已存在测试 mint 或你自有 mint。
 

@@ -5,7 +5,7 @@ pub const VAULT_SEED: &[u8] = b"vault";
 pub const LP_SEED: &[u8] = b"lp";
 pub const MAX_ALLOWED_MINTS: usize = 3;
 
-#[account]
+#[account]//这个config pda要存的数据，是自己定义的。
 pub struct Config {
     pub admin: Pubkey,
     pub allowed_caller_authority: Pubkey,
