@@ -52,7 +52,7 @@ npx ts-node scripts/setAllowedCaller.ts \
 
 
 
-
+<!-- 
 2) 用户仅存金 deposit_from_user（不记录 LP）
 说明：用户先要有该 mint 的余额。本地可自建测试 mint 并 mint 给用户；devnet 可用已存在测试 mint 或你自有 mint。
 
@@ -65,7 +65,7 @@ npx ts-node scripts/depositFromUser.ts \
   [--rpc <RPC_URL>] [--payer <KEYPAIR_PATH>] [--create-atas]
 ```
 - `--amount`：最小单位（如 USDC 6 位，1 USDC=1_000_000）
-- `--create-atas`：缺失时为用户与金库自动创建 ATA
+- `--create-atas`：缺失时为用户与金库自动创建 ATA -->
 
 3) 用户 LP 存入 lp_deposit（会记录 LP 头寸）
 ```bash

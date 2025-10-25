@@ -8,6 +8,9 @@ skip-lint = false
 [programs.localnet]
 transfer_contract = "GSPmsxkxd5qR5HG4fhUd5cBrVkWNJWi6pWUFQnYmTEc1"
 
+[programs.devnet]
+transfer_contract = "GSPmsxkxd5qR5HG4fhUd5cBrVkWNJWi6pWUFQnYmTEc1"
+
 [registry]
 url = "https://api.apr.dev"
 

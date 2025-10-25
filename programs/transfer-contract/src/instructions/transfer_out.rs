@@ -7,12 +7,6 @@ use crate::state::{Config, ErrorCode, CONFIG_SEED, VAULT_SEED};
 pub fn handler(ctx: Context<TransferOut>, amount: u64) -> Result<()> {
     let config = &ctx.accounts.config;
 
-    let authority_key = ctx.accounts.authority.key();
-    require!(
-        authority_key == config.admin || authority_key == config.allowed_caller_authority,
-        ErrorCode::NotAuthorized
-    );
-
     require!(config.is_allowed_mint(&ctx.accounts.mint.key()), ErrorCode::MintNotAllowed);
     require_keys_eq!(ctx.accounts.recipient_token_account.mint, ctx.accounts.mint.key(), ErrorCode::RecipientMintMismatch);
     require_keys_eq!(ctx.accounts.vault_token_account.mint, ctx.accounts.mint.key(), ErrorCode::VaultMintMismatch);

@@ -18,3 +18,10 @@ Bump: 254
 本合约的PDA (给前端看的)
  config PDA:X6ci3v3wgpFrRvmsFsjeemr1EDeaHaok23UsehuQcvn
  vault_authority:A9QYh2sTEN3XFFk95WZr2hsLFMC2781oPwKexPySNJrt
+
+mint:usdc 
+
+
+eid:
+base sepolia:40245
+arb sepolia:40231

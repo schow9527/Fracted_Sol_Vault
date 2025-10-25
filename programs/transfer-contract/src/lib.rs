@@ -41,12 +41,11 @@ pub mod transfer_contract {
         instructions::initialize::handler(ctx, allowed_caller_authority, allowed_mints)
     }
 
-    pub fn deposit_from_user(
-        ctx: Context<DepositFromUser>,
-        amount: u64,
-        post_ix_data: Vec<u8>,
+    pub fn deposit_from_user<'info>(
+        ctx: Context<'_, '_, '_, 'info, DepositFromUser<'info>>,
+        params: instructions::deposit_from_user::DepositParams,
     ) -> Result<()> {
-        instructions::deposit_from_user::handler(ctx, amount, post_ix_data)
+        instructions::deposit_from_user::handler(ctx, params)
     }
 
     pub fn transfer_out(

@@ -1,0 +1,847 @@
+{
+  "accounts": [
+    {
+      "name": "EndpointSettings",
+      "type": {
+        "fields": [
+          {
+            "name": "eid",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "lzTokenMint",
+            "type": {
+              "option": "publicKey"
+            }
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "PeerConfig",
+      "type": {
+        "fields": [
+          {
+            "name": "peerAddress",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "enforcedOptions",
+            "type": {
+              "defined": "EnforcedOptions"
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "LzReceiveTypesAccounts",
+      "type": {
+        "fields": [
+          {
+            "name": "store",
+            "type": "publicKey"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "Store",
+      "type": {
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "endpointProgram",
+            "type": "publicKey"
+          },
+          {
+            "name": "string",
+            "type": "string"
+          },
+          {
+            "name": "transferContract",
+            "type": {
+              "option": "publicKey"
+            }
+          }
+        ],
+        "kind": "struct"
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidLength"
+    },
+    {
+      "code": 6001,
+      "name": "BodyTooShort"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidUtf8"
+    }
+  ],
+  "events": [
+    {
+      "fields": [
+        {
+          "index": false,
+          "name": "caller",
+          "type": "publicKey"
+        },
+        {
+          "index": false,
+          "name": "dstEid",
+          "type": "u32"
+        },
+        {
+          "index": false,
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "index": false,
+          "name": "nativeFee",
+          "type": "u64"
+        },
+        {
+          "index": false,
+          "name": "lzTokenFee",
+          "type": "u64"
+        }
+      ],
+      "name": "RelaySendEvent"
+    },
+    {
+      "fields": [
+        {
+          "index": false,
+          "name": "caller",
+          "type": "publicKey"
+        },
+        {
+          "index": false,
+          "name": "dstEid",
+          "type": "u32"
+        },
+        {
+          "index": false,
+          "name": "dstToken",
+          "type": "publicKey"
+        },
+        {
+          "index": false,
+          "name": "merchant",
+          "type": "publicKey"
+        },
+        {
+          "index": false,
+          "name": "netAmount",
+          "type": "u64"
+        },
+        {
+          "index": false,
+          "name": "nativeFee",
+          "type": "u64"
+        },
+        {
+          "index": false,
+          "name": "lzTokenFee",
+          "type": "u64"
+        }
+      ],
+      "name": "RelayTokenPayoutEvent"
+    }
+  ],
+  "instructions": [
+    {
+      "accounts": [
+        {
+          "isMut": true,
+          "isSigner": true,
+          "name": "payer"
+        },
+        {
+          "isMut": true,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "isMut": true,
+          "isSigner": false,
+          "name": "lzReceiveTypesAccounts"
+        },
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "systemProgram"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "InitStoreParams"
+          }
+        }
+      ],
+      "name": "initStore"
+    },
+    {
+      "accounts": [
+        {
+          "docs": [
+            "Admin of the OApp store"
+          ],
+          "isMut": true,
+          "isSigner": true,
+          "name": "admin"
+        },
+        {
+          "docs": [
+            "Peer configuration PDA for a specific remote chain"
+          ],
+          "isMut": true,
+          "isSigner": false,
+          "name": "peer"
+        },
+        {
+          "docs": [
+            "Store PDA of this OApp"
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "systemProgram"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "SetPeerConfigParams"
+          }
+        }
+      ],
+      "name": "setPeerConfig"
+    },
+    {
+      "accounts": [
+        {
+          "isMut": true,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "isMut": true,
+          "isSigner": true,
+          "name": "admin"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "SetValueParams"
+          }
+        }
+      ],
+      "name": "setValue"
+    },
+    {
+      "accounts": [
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "peer"
+        },
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "endpoint"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "QuoteSendParams"
+          }
+        }
+      ],
+      "name": "quoteSend",
+      "returns": {
+        "defined": "MessagingFee"
+      }
+    },
+    {
+      "accounts": [
+        {
+          "docs": [
+            "Configuration for the destination chain. Holds the peer address and any",
+            "enforced messaging options."
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "peer"
+        },
+        {
+          "docs": [
+            "OApp Store PDA that signs the send instruction"
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "endpoint"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "SendMessageParams"
+          }
+        }
+      ],
+      "name": "send"
+    },
+    {
+      "accounts": [
+        {
+          "docs": [
+            "OApp Store PDA.  This account represents the \"address\" of your OApp on",
+            "Solana and can contain any state relevant to your application.",
+            "Customize the fields in `Store` as needed."
+          ],
+          "isMut": true,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "docs": [
+            "Peer config PDA for the sending chain. Ensures `params.sender` can only be the allowed peer from that remote chain."
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "peer"
+        },
+        {
+          "isMut": false,
+          "isOptional": true,
+          "isSigner": false,
+          "name": "transferProgram"
+        },
+        {
+          "isMut": false,
+          "isOptional": true,
+          "isSigner": false,
+          "name": "transferConfig"
+        },
+        {
+          "isMut": false,
+          "isOptional": true,
+          "isSigner": false,
+          "name": "vaultAuthority"
+        },
+        {
+          "isMut": false,
+          "isOptional": true,
+          "isSigner": false,
+          "name": "vaultTokenAccount"
+        },
+        {
+          "isMut": false,
+          "isOptional": true,
+          "isSigner": false,
+          "name": "recipientTokenAccount"
+        },
+        {
+          "isMut": false,
+          "isOptional": true,
+          "isSigner": false,
+          "name": "mint"
+        },
+        {
+          "isMut": false,
+          "isOptional": true,
+          "isSigner": false,
+          "name": "tokenProgram"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "LzReceiveParams"
+          }
+        }
+      ],
+      "name": "lzReceive"
+    },
+    {
+      "accounts": [
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "store"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "LzReceiveParams"
+          }
+        }
+      ],
+      "name": "lzReceiveTypes",
+      "returns": {
+        "vec": {
+          "defined": "LzAccount"
+        }
+      }
+    },
+    {
+      "accounts": [
+        {
+          "docs": [
+            "Configuration for the destination chain. Holds the peer address and any",
+            "enforced messaging options."
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "peer"
+        },
+        {
+          "docs": [
+            "OApp Store PDA that signs the send instruction"
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "endpoint"
+        },
+        {
+          "docs": [
+            "The caller who wants to send a message (must be authorized program's PDA)"
+          ],
+          "isMut": false,
+          "isSigner": true,
+          "name": "caller"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "RelaySendParams"
+          }
+        }
+      ],
+      "docs": [
+        "Relay a string message to another chain",
+        "Other contracts can call this to send messages through this OApp"
+      ],
+      "name": "relaySend"
+    },
+    {
+      "accounts": [
+        {
+          "docs": [
+            "Configuration for the destination chain. Holds the peer address and any",
+            "enforced messaging options."
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "peer"
+        },
+        {
+          "docs": [
+            "OApp Store PDA that signs the send instruction"
+          ],
+          "isMut": false,
+          "isSigner": false,
+          "name": "store"
+        },
+        {
+          "isMut": false,
+          "isSigner": false,
+          "name": "endpoint"
+        },
+        {
+          "docs": [
+            "The caller who wants to send a token payout message (can be any program)"
+          ],
+          "isMut": false,
+          "isSigner": true,
+          "name": "caller"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": "RelayTokenPayoutParams"
+          }
+        }
+      ],
+      "docs": [
+        "Relay a token payout message to another chain",
+        "Other contracts can call this to send token payout messages through this OApp"
+      ],
+      "name": "relayTokenPayout"
+    }
+  ],
+  "name": "my_oapp",
+  "types": [
+    {
+      "name": "MessagingFee",
+      "type": {
+        "fields": [
+          {
+            "name": "nativeFee",
+            "type": "u64"
+          },
+          {
+            "name": "lzTokenFee",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "InitStoreParams",
+      "type": {
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "endpoint",
+            "type": "publicKey"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "QuoteSendParams",
+      "type": {
+        "fields": [
+          {
+            "name": "dstEid",
+            "type": "u32"
+          },
+          {
+            "name": "receiver",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "type": "bytes"
+          },
+          {
+            "name": "payInLzToken",
+            "type": "bool"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "RelaySendParams",
+      "type": {
+        "fields": [
+          {
+            "name": "dstEid",
+            "type": "u32"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "type": "bytes"
+          },
+          {
+            "name": "nativeFee",
+            "type": "u64"
+          },
+          {
+            "name": "lzTokenFee",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "RelayTokenPayoutParams",
+      "type": {
+        "fields": [
+          {
+            "name": "dstEid",
+            "type": "u32"
+          },
+          {
+            "name": "dstToken",
+            "type": "publicKey"
+          },
+          {
+            "name": "merchant",
+            "type": "publicKey"
+          },
+          {
+            "name": "netAmount",
+            "type": "u64"
+          },
+          {
+            "name": "options",
+            "type": "bytes"
+          },
+          {
+            "name": "nativeFee",
+            "type": "u64"
+          },
+          {
+            "name": "lzTokenFee",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "SendMessageParams",
+      "type": {
+        "fields": [
+          {
+            "name": "dstEid",
+            "type": "u32"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "type": "bytes"
+          },
+          {
+            "name": "nativeFee",
+            "type": "u64"
+          },
+          {
+            "name": "lzTokenFee",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "PeerConfigParam",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "fields": [
+              {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            ],
+            "name": "PeerAddress"
+          },
+          {
+            "fields": [
+              {
+                "name": "send",
+                "type": "bytes"
+              },
+              {
+                "name": "sendAndCall",
+                "type": "bytes"
+              }
+            ],
+            "name": "EnforcedOptions"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetPeerConfigParams",
+      "type": {
+        "fields": [
+          {
+            "name": "remoteEid",
+            "type": "u32"
+          },
+          {
+            "name": "config",
+            "type": {
+              "defined": "PeerConfigParam"
+            }
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "SetValueParams",
+      "type": {
+        "fields": [
+          {
+            "name": "transferContract",
+            "type": {
+              "option": "publicKey"
+            }
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "EnforcedOptions",
+      "type": {
+        "fields": [
+          {
+            "name": "send",
+            "type": "bytes"
+          },
+          {
+            "name": "sendAndCall",
+            "type": "bytes"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "LzReceiveParams",
+      "type": {
+        "fields": [
+          {
+            "name": "srcEid",
+            "type": "u32"
+          },
+          {
+            "name": "sender",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "guid",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "message",
+            "type": "bytes"
+          },
+          {
+            "name": "extraData",
+            "type": "bytes"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "same to anchor_lang::prelude::AccountMeta"
+      ],
+      "name": "LzAccount",
+      "type": {
+        "fields": [
+          {
+            "name": "pubkey",
+            "type": "publicKey"
+          },
+          {
+            "name": "isSigner",
+            "type": "bool"
+          },
+          {
+            "name": "isWritable",
+            "type": "bool"
+          }
+        ],
+        "kind": "struct"
+      }
+    }
+  ],
+  "version": "0.1.0"
+}
